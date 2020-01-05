@@ -4,14 +4,8 @@ function Generate() {
 
     var Descriptionv = '\"description\":' + " " +"\""+ Description + "\"";
     var Namev = "\"name\":" + " " +"\""+ Name + "\"";
-    var random1 = Math.floor( Math.random() * 9 );
-    var random2 = Math.floor( Math.random() * 9 );
-    var random3 = Math.floor( Math.random() * 9 );
-    var uuidv1 = "\"uuid\":" + " " + "\"" + random1 + random2 + random3 + "f6949-53be-44b6-b326-398005028819\",";
-    random1 = Math.floor( Math.random() * 9 );
-    random2 = Math.floor( Math.random() * 9 );
-    random3 = Math.floor( Math.random() * 9 );
-    var uuidv2 = "\"uuid\":" + " " + "\"" + random1 + random2 + random3 + "f6949-53be-44b6-b326-398005028819\",";
+    var uuidv1 = "\"uuid\":" + " " + "\"" +uuid(); 
+    var uuidv2 = "\"uuid\":" + " " + "\"" +uuid(); 
     var typev = document.getElementById("type").value;
     var typev
     switch (typev) {
@@ -23,11 +17,26 @@ function Generate() {
         typeva = "\"type\": \"data\",\n" ;
         break;
 
+        case "s" :
+        typeva= "\"type\": \"skin_pack\",\n";
+        break;
+
         default:
             alert("エラーが発生しました");
     }
     var manifest;
-    manifest = "{\n" + "\"format_version\": 1,\n" + "\"header\": {\n" + Descriptionv +","+ "\n" + Namev + "," + "\n" + uuidv1 + "\n" + "\"version\": [0, 0, 0]\n" + "},\n" + "\"modules\": [\n" + "{\n" + Descriptionv +","+ "\n" + typeva + uuidv2 + "\n" + "\"version\": [0, 0, 0]\n" + "}\n" + "]\n" + "}\n" ;
+    manifest = "{\n" + "\"format_version\": 1,\n" + "\"header\": {\n" + Descriptionv +","+ "\n" + Namev + "," + "\n" + uuidv1 +"\","+ "\n" + "\"version\": [0, 0, 0]\n" + "},\n" + "\"modules\": [\n" + "{\n" + Descriptionv +","+ "\n" + typeva + uuidv2 +"\","+ "\n" + "\"version\": [0, 0, 0]\n" + "}\n" + "]\n" + "}\n" ;
     var manifestv = document.getElementById("mv");
     manifestv.innerHTML = "<pre>" + manifest + "</pre>";
 }
+function uuid(){
+    var uuid = "", i, random;
+    for (i = 0; i < 32; i++) {
+      random = Math.random() * 16 | 0;
+      if (i == 8 || i == 12 || i == 16 || i == 20) {
+        uuid += "-"
+      }
+      uuid += (i == 12 ? 4 : (i == 16 ? (random & 3 | 8) : random)).toString(16);
+    }
+    return uuid;
+  }
